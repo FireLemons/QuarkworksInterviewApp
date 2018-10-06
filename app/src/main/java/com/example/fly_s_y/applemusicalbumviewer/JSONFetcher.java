@@ -1,11 +1,9 @@
 package com.example.fly_s_y.applemusicalbumviewer;
 
-import org.json.JSONObject;
-
 /**
  * Handles fetching JSON from a single domain.
  */
-public class JSONFetcher extends RequestHandler{
+public class JSONFetcher extends ConnectionHandler {
     public JSONFetcher(String domain) {
         super(domain);
     }
@@ -17,7 +15,7 @@ public class JSONFetcher extends RequestHandler{
      *  The value js accesses from the JSON on success
      *  Null on failure
      */
-    public Object getValue(Object JSON, String js){
+    protected Object getValue(Object JSON, String js){
         return null;
     }
 
@@ -27,7 +25,7 @@ public class JSONFetcher extends RequestHandler{
      *  Either a JSONObject or a JSONArray on success
      *  Null on failure
      */
-    public Object fetchJSON(String path){
+    protected Object fetchJSON(String path){
         return null;
     }
 }

@@ -5,15 +5,16 @@ import java.io.IOException;
 /**
  * Handles communication between the app and a single domain.
  */
-public class RequestHandler {
+public class ConnectionHandler {
     protected String domain;
 
-    public RequestHandler(String domain) {
+    public ConnectionHandler(String domain) {
         this.domain = domain;
     }
 
     /**
      * Determines whether there is a connection to domain
+     * taken from https://stackoverflow.com/a/27312494/3667444
      * @return
      *      true on successful ping
      *      false otherwise
