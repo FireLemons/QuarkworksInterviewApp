@@ -28,8 +28,8 @@ public class JSONFetcher extends ConnectionHandler {
         ArrayList<JSONAccessor> accessors = new ArrayList<JSONAccessor>();
 
         //Input check for jsAccessor
-        Pattern dotAccessor = Pattern.compile("(^\\.[_a-zA-Z][_a-zA-Z0-9]*)"),
-                bracketAccessor = Pattern.compile("(^\\['[_a-zA-Z][_a-zA-Z0-9]*'\\])"),
+        Pattern dotAccessor = Pattern.compile("(^\\.[_\\$a-zA-Z][_\\$a-zA-Z0-9]*)"),
+                bracketAccessor = Pattern.compile("(^\\['[_\\$a-zA-Z][_\\$a-zA-Z0-9]*'\\])"),
                 bracketIndexAccessor = Pattern.compile("(^\\[[0-9]+\\])");
         String accessorsExpression = jsAccessor;
         Matcher capturedAccessor;
