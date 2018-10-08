@@ -1,4 +1,6 @@
-package com.example.fly_s_y.applemusicalbumviewer;
+package com.example.fly_s_y.applemusicalbumviewer.JSON;
+
+import com.example.fly_s_y.applemusicalbumviewer.JSON.JSONAccessorType;
 
 public class JSONAccessor {
     private JSONAccessorType type;

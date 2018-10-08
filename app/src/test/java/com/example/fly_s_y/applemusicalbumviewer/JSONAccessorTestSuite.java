@@ -1,10 +1,11 @@
 package com.example.fly_s_y.applemusicalbumviewer;
 
+import com.example.fly_s_y.applemusicalbumviewer.JSON.JSONFetcher;
+
 import org.json.JSONObject;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
-public class JSONAccessorTestSuite extends JSONFetcher{
+public class JSONAccessorTestSuite extends JSONFetcher {
     public JSONAccessorTestSuite() {
         super("");
     }

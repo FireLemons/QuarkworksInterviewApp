@@ -1,4 +1,8 @@
-package com.example.fly_s_y.applemusicalbumviewer;
+package com.example.fly_s_y.applemusicalbumviewer.JSON;
+
+import com.example.fly_s_y.applemusicalbumviewer.ConnectionHandler;
+import com.example.fly_s_y.applemusicalbumviewer.JSON.JSONAccessor;
+import com.example.fly_s_y.applemusicalbumviewer.JSON.JSONAccessorType;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -79,7 +83,18 @@ public class JSONFetcher extends ConnectionHandler {
             }
         }
 
-        return null;
+        //Search the object using the accessors
+        Object value = JSON;
+
+        for(JSONAccessor accessor: accessors){
+            if(accessor.getType() == JSONAccessorType.Key){
+
+            } else {
+
+            }
+        }
+
+        return value;
     }
 
     /**
