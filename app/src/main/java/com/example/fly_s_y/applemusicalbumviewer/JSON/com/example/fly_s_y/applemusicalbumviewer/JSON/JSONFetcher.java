@@ -4,6 +4,10 @@ import com.example.fly_s_y.applemusicalbumviewer.ConnectionHandler;
 import com.example.fly_s_y.applemusicalbumviewer.JSON.JSONAccessor;
 import com.example.fly_s_y.applemusicalbumviewer.JSON.JSONAccessorType;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,7 +27,7 @@ public class JSONFetcher extends ConnectionHandler {
      *  The value jsAccessor accesses from the JSON on success
      *  Null on failure
      */
-    protected Object getValue(Object JSON, String jsAccessor){
+    protected Object getValue(Object JSON, String jsAccessor) throws JSONException {
         //No access to the object attempted
         if(jsAccessor.length() == 0){
             return JSON;
@@ -88,9 +92,29 @@ public class JSONFetcher extends ConnectionHandler {
 
         for(JSONAccessor accessor: accessors){
             if(accessor.getType() == JSONAccessorType.Key){
-
+                if(value instanceof JSONObject){
+                    value = ((JSONObject) value).get(accessor.getAccessor());
+                } else if(value instanceof JSONArray){
+                    try{
+                        int index = Integer.parseInt(accessor.getAccessor());
+                        value = ((JSONArray) value).get(index);
+                    } catch(NumberFormatException ex){
+                        throw new JSONException("Attempted to access a value from a non JSONObject using a key");
+                    }
+                } else {
+                    throw new JSONException("Attempted to access a value from a non JSONObject using a key");
+                }
             } else {
+                if(value instanceof JSONArray){
+                    try{
+                        int index = Integer.parseInt(accessor.getAccessor());
+                        value = ((JSONArray) value).get(index);
+                    } catch(NumberFormatException ex){
+                        throw new JSONException("Attempted to access a value from a non JSONObject using a key");
+                    }
+                }
 
+                throw new JSONException("Attempted to access a non JSONArray using an index");
             }
         }
 
