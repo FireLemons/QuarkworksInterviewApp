@@ -2,10 +2,12 @@ package com.example.fly_s_y.applemusicalbumviewer;
 
 import com.example.fly_s_y.applemusicalbumviewer.JSON.JSONFetcher;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 public class JSONAccessorTestSuite extends JSONFetcher {
@@ -84,7 +86,6 @@ public class JSONAccessorTestSuite extends JSONFetcher {
         "}");
 
         getValue(object, ".nonExistant");
-
     }
 
     @Test
@@ -99,6 +100,91 @@ public class JSONAccessorTestSuite extends JSONFetcher {
             "}");
 
             assertEquals(object, getValue(object, ""));
+        } catch (JSONException ex){
+            ex.printStackTrace();
+        }
+    }
+
+    @Test
+    public void accessJSON_dotAccessor(){
+        JSONObject object;
+
+        try{
+            object = new JSONObject(
+            "{" +
+                "str:\"String\"," +
+                "int:12" +
+            "}");
+
+            assertTrue(((JSONObject)object).get("str").equals(getValue(object, ".str")));
+        } catch (JSONException ex){
+            ex.printStackTrace();
+        }
+    }
+
+    @Test
+    public void accessJSON_bracketAccessor(){
+        JSONObject object;
+
+        try{
+            object = new JSONObject(
+            "{" +
+                "str:\"String\"," +
+                "int:12" +
+            "}");
+
+            assertTrue(((JSONObject)object).get("str").equals(getValue(object, "['str']")));
+        } catch (JSONException ex){
+            ex.printStackTrace();
+        }
+    }
+
+    @Test
+    public void accessJSON_bracketAccessor2(){
+        JSONArray object;
+
+        try{
+            object = new JSONArray(
+            "[" +
+                "{a: 'test'}," +
+                "{b: 'test'}" +
+            "]");
+
+            assertTrue(((JSONArray)object).get(0).equals(getValue(object, "['0']")));
+        } catch (JSONException ex){
+            ex.printStackTrace();
+        }
+    }
+
+    @Test
+    public void accessJSON_bracketAccessor3(){
+        JSONArray object;
+
+        try{
+            object = new JSONArray(
+                    "[" +
+                            "{a: 'test'}," +
+                            "{b: 'test'}" +
+                            "]");
+
+            assertTrue(((JSONArray)object).get(0).equals(getValue(object, "[\"0\"]")));
+        } catch (JSONException ex){
+            ex.printStackTrace();
+        }
+    }
+
+    @Test
+    public void accessJSON_bracketIndexAccessor(){
+        JSONArray object;
+
+        try{
+            object = new JSONArray(
+            "[" +
+                "{a: 'test'}," +
+                "{b: 'test'}" +
+            "]");
+
+            assertTrue(((JSONArray)object).get(0).equals(getValue(object, "[0]")));
         } catch (JSONException ex){
             ex.printStackTrace();
         }

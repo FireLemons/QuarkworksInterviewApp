@@ -37,7 +37,7 @@ public class JSONFetcher extends ConnectionHandler {
 
         //Input check for jsAccessor
         Pattern dotAccessor = Pattern.compile("(^\\.[_\\$a-zA-Z][_\\$a-zA-Z0-9]*)"),
-                bracketAccessor = Pattern.compile("(^\\['[_\\$a-zA-Z][_\\$a-zA-Z0-9]*'\\])"),
+                bracketAccessor = Pattern.compile("(^\\[['\"](?:[_\\$a-zA-Z][_\\$a-zA-Z0-9]*|[0-9]+)['\"]\\])"),
                 bracketIndexAccessor = Pattern.compile("(^\\[[0-9]+\\])");
         String accessorsExpression = jsAccessor;
         Matcher capturedAccessor;
@@ -58,7 +58,7 @@ public class JSONFetcher extends ConnectionHandler {
                     throw new IllegalArgumentException("Invalid format for input.\nInput should be in the form of accessorsExpression usually following a javascript object variable");
                 case '[':
                     if(accessorsExpression.length() > 1){
-                        if(accessorsExpression.charAt(1) == '\''){
+                        if(accessorsExpression.charAt(1) == '\'' || accessorsExpression.charAt(1) == '"'){
                             capturedAccessor = bracketAccessor.matcher(accessorsExpression);
 
                             if(capturedAccessor.find()){
@@ -112,9 +112,9 @@ public class JSONFetcher extends ConnectionHandler {
                     } catch(NumberFormatException ex){
                         throw new JSONException("Attempted to access a value from a non JSONObject using a key");
                     }
+                } else {
+                    throw new JSONException("Attempted to access a non JSONArray using an index");
                 }
-
-                throw new JSONException("Attempted to access a non JSONArray using an index");
             }
         }
 
