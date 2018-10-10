@@ -1,6 +1,6 @@
 package com.example.fly_s_y.applemusicalbumviewer;
 
-import com.example.fly_s_y.applemusicalbumviewer.JSON.JSONFetcher;
+import com.example.fly_s_y.JSON.JSONFetcher;
 
 import org.json.JSONArray;
 import org.json.JSONException;

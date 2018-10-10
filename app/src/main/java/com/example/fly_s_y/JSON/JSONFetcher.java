@@ -1,8 +1,6 @@
-package com.example.fly_s_y.applemusicalbumviewer.JSON;
+package com.example.fly_s_y.JSON;
 
 import com.example.fly_s_y.applemusicalbumviewer.ConnectionHandler;
-import com.example.fly_s_y.applemusicalbumviewer.JSON.JSONAccessor;
-import com.example.fly_s_y.applemusicalbumviewer.JSON.JSONAccessorType;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,7 +53,7 @@ public class JSONFetcher extends ConnectionHandler {
                         break;
                     }
 
-                    throw new IllegalArgumentException("Invalid format for input.\nInput should be in the form of accessorsExpression usually following a javascript object variable");
+                    throw new IllegalArgumentException("Invalid format for input.\nInput should be in the form of accessor expression usually following a javascript object variable");
                 case '[':
                     if(accessorsExpression.length() > 1){
                         if(accessorsExpression.charAt(1) == '\'' || accessorsExpression.charAt(1) == '"'){
