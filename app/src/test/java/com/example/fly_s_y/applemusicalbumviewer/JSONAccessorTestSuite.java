@@ -189,4 +189,40 @@ public class JSONAccessorTestSuite extends JSONFetcher {
             ex.printStackTrace();
         }
     }
+
+    @Test
+    public void accessJSON_mixedAccessors(){
+        JSONArray object;
+
+        try{
+            object = new JSONArray(
+            "[" +
+                "{a: 'test'}," +
+                "{b: 'test'}" +
+            "]");
+
+            assertTrue(((JSONObject)((JSONArray)object).get(1)).get("b").equals(getValue(object, "[1].b")));
+        } catch (JSONException ex){
+            ex.printStackTrace();
+        }
+    }
+
+    @Test
+    public void accessJSON_mixedAccessors2(){
+        JSONObject object;
+
+        try{
+            object = new JSONObject(
+            "{" +
+                "depth0:[" +
+                    "{a: 'test'}," +
+                    "{b: 'test'}" +
+                "]" +
+            "}");
+
+            assertTrue(((JSONObject)((JSONArray)((JSONObject)object).get("depth0")).get(0)).get("a").equals(getValue(object, ".depth0['0'][\"a\"]")));
+        } catch (JSONException ex){
+            ex.printStackTrace();
+        }
+    }
 }
