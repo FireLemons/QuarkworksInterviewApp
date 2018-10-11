@@ -1,7 +1,5 @@
 package com.example.fly_s_y.JSON;
 
-import com.example.fly_s_y.applemusicalbumviewer.ConnectionHandler;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -126,6 +124,7 @@ public class JSONFetcher extends ConnectionHandler {
      *  Null on failure
      */
     protected Object fetchJSON(String path){
+
         return null;
     }
 }

@@ -1,27 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".MusicListView">
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/album_list_view"
-        android:scrollbars="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    <data>
+        <import type="android.view.View"/>
+        <variable name="error" type="com.example.fly_s_y.applemusicalbumviewer.ErrorDisplay"/>
+    </data>
     <RelativeLayout
-    android:id="@+id/loadScreen"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorAccentLight"
-    android:gravity="center" >
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/album_list_view"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <RelativeLayout
+            android:id="@+id/errorScreen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/error"
+            android:visibility="@{error.isVisible ? View.VISIBLE : View.GONE}">
 
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminate="true" />
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="16pt"
+                    android:text="@{error.errorMessage}"/>
+            </ScrollView>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/loadScreen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="center">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"/>
+        </RelativeLayout>
     </RelativeLayout>
-</android.support.constraint.ConstraintLayout>
+</layout>

@@ -1,4 +1,4 @@
-package com.example.fly_s_y.applemusicalbumviewer;
+package com.example.fly_s_y.JSON;
 
 import java.io.IOException;
 
