@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 
 public class JSONAccessorTestSuite extends JSONFetcher {
     public JSONAccessorTestSuite() {
-        super("");
+        super("", new ErrorDisplay());
     }
 
     @Test (expected = IllegalArgumentException.class)

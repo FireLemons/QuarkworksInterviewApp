@@ -22,7 +22,7 @@ public class ConnectionHandler {
     public boolean isConnection() {
         Runtime runtime = Runtime.getRuntime();
         try {
-            Process ipProcess = runtime.exec("/system/bin/ping -c 1" + domain);
+            Process ipProcess = runtime.exec("/system/bin/ping -c 1 " + domain);
             int     exitValue = ipProcess.waitFor();
             return (exitValue == 0);
         }

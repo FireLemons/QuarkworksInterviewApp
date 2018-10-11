@@ -1,19 +1,33 @@
 package com.example.fly_s_y.JSON;
 
+import com.example.fly_s_y.applemusicalbumviewer.ErrorDisplay;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Handles fetching JSON from a single domain.
  */
 public class JSONFetcher extends ConnectionHandler {
-    public JSONFetcher(String domain) {
+    protected OkHttpClient client = new OkHttpClient();
+    protected ErrorDisplay errorDisplay;
+
+    public JSONFetcher(String domain, ErrorDisplay errorDisplay) {
         super(domain);
+
+        this.errorDisplay = errorDisplay;
     }
 
     /**
@@ -124,6 +138,21 @@ public class JSONFetcher extends ConnectionHandler {
      *  Null on failure
      */
     protected Object fetchJSON(String path){
+
+        Request JSONAlbumRequest = new Request.Builder().url(domain + path).build();
+        Call call = client.newCall(JSONAlbumRequest);
+
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+            }
+        });
 
         return null;
     }
