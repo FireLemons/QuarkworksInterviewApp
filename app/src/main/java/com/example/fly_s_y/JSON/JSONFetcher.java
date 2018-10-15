@@ -6,7 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,19 +14,21 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * Handles fetching JSON from a single domain.
  */
 public class JSONFetcher extends ConnectionHandler {
-    protected OkHttpClient client = new OkHttpClient();
+    protected OkHttpClient client;
     protected ErrorDisplay errorDisplay;
+    protected String scheme;
 
-    public JSONFetcher(String domain, ErrorDisplay errorDisplay) {
+    public JSONFetcher(String scheme, String domain, ErrorDisplay errorDisplay) {
         super(domain);
 
         this.errorDisplay = errorDisplay;
+        this.client = new OkHttpClient();
+        this.scheme = scheme;
     }
 
     /**
@@ -137,23 +138,10 @@ public class JSONFetcher extends ConnectionHandler {
      *  Either a JSONObject or a JSONArray on success
      *  Null on failure
      */
-    protected Object fetchJSON(String path){
-
-        Request JSONAlbumRequest = new Request.Builder().url(domain + path).build();
+    protected void fetchJSON(String path, Callback callback){
+        Request JSONAlbumRequest = new Request.Builder().url(scheme + domain + path).build();
         Call call = client.newCall(JSONAlbumRequest);
 
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-
-            }
-        });
-
-        return null;
+        call.enqueue(callback);
     }
 }
