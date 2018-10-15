@@ -82,7 +82,7 @@ public class AppleMusicRequestHandler extends JSONFetcher{
                                 }
                             });
                         }
-                        
+
                         mainActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
