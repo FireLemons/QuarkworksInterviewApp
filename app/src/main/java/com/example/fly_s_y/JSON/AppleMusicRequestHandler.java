@@ -2,6 +2,7 @@ package com.example.fly_s_y.JSON;
 
 import android.app.Activity;
 import android.util.Log;
+import android.view.View;
 
 import com.example.fly_s_y.applemusicalbumviewer.Album;
 import com.example.fly_s_y.applemusicalbumviewer.AlbumAdapter;
@@ -28,7 +29,7 @@ public class AppleMusicRequestHandler extends JSONFetcher{
         super("https://", "rss.itunes.apple.com", errorDisplay);
     }
 
-    public void getAlbumData(final AlbumAdapter adapter, final AlbumList albumList, final Activity mainActivity){
+    public void getAlbumData(final AlbumAdapter adapter, final AlbumList albumList, final Activity mainActivity, final View loadScreen){
         fetchJSON("/api/v1/us/apple-music/top-albums/all/10/explicit.json", new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -54,32 +55,43 @@ public class AppleMusicRequestHandler extends JSONFetcher{
                                 throw new JSONException("Could not convert response to JSON Object");
                         }
 
-                        albumList.setLastUpdated((String)getValue(data, ".feed.updated"));
+                        String updated = (String)getValue(data, ".feed.updated");
 
-                        JSONArray albumsData = (JSONArray) getValue(data, ".feed.results");
-                        ArrayList<Album> albums = new ArrayList<Album>();
+                        if(!updated.equals(albumList.getLastUpdated())){
+                            albumList.setLastUpdated(updated);
 
-                        for(int i = 0; i < albumsData.length(); i++){
-                            Object album = albumsData.get(i);
+                            JSONArray albumsData = (JSONArray) getValue(data, ".feed.results");
+                            ArrayList<Album> albums = new ArrayList<Album>();
 
-                            albums.add(new Album(
-                                    (String)getValue(album, ".name"),
-                                    (String)getValue(album, ".artistName"),
-                                    (String)getValue(album, ".artworkUrl100")
-                            ));
+                            for(int i = 0; i < albumsData.length(); i++){
+                                Object album = albumsData.get(i);
+
+                                albums.add(new Album(
+                                        (String)getValue(album, ".name"),
+                                        (String)getValue(album, ".artistName"),
+                                        (String)getValue(album, ".artworkUrl100")
+                                ));
+                            }
+
+                            albumList.setAlbumList(albums);
+
+                            mainActivity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    adapter.notifyDataSetChanged();
+                                }
+                            });
                         }
-
-                        albumList.setAlbumList(albums);
+                        
+                        mainActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                loadScreen.setVisibility(View.GONE);
+                            }
+                        });
                     } catch (JSONException ex){
                         errorDisplay.setError(ex.getMessage());
                     }
-
-                    mainActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            adapter.notifyDataSetChanged();
-                        }
-                    });
                 }
             }
         });

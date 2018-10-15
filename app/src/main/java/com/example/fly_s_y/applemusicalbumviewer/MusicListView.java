@@ -41,11 +41,11 @@ public class MusicListView extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        super.onResume();
         loadScreen.setVisibility(View.VISIBLE);
+        super.onResume();
 
         if(handler.isConnection()){
-            handler.getAlbumData(albumAdapter, albumListData, this);
+            handler.getAlbumData(albumAdapter, albumListData, this, loadScreen);
 
             if(error.getIsVisible()){
                 error.clearError();
@@ -53,7 +53,5 @@ public class MusicListView extends AppCompatActivity {
         } else if(!error.getIsVisible()){
             error.setError("Could not connect to iTunes' RSS feed");
         }
-
-        loadScreen.setVisibility(View.GONE);
     }
 }
