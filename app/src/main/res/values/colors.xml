@@ -7,4 +7,5 @@
     <color name="colorAccentLight">#ffa040</color>
     <color name="error">#b00020</color>
     <color name="white">#fff</color>
+    <color name="transparentWhite">#4fff</color>
 </resources>
