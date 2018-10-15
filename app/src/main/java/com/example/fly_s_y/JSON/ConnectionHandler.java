@@ -20,6 +20,8 @@ public class ConnectionHandler {
      *      false otherwise
      */
     public boolean isConnection() {
+        
+
         Runtime runtime = Runtime.getRuntime();
         try {
             Process ipProcess = runtime.exec("/system/bin/ping -c 1 " + domain);

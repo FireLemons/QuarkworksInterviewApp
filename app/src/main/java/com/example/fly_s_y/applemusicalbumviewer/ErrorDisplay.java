@@ -32,13 +32,16 @@ public class ErrorDisplay extends BaseObservable {
         return errorMessage;
     }
 
-    public void setIsVisible(boolean isVisible){
-        this.isVisible = isVisible;
+    public void clearError(){
+        errorMessage = "";
+        isVisible = false;
         notifyPropertyChanged(BR.isVisible);
     }
 
-    public void setErrorMessage(String errorMessage) {
+    public void setError(String errorMessage) {
         this.errorMessage = errorMessage;
+        isVisible = true;
         notifyPropertyChanged(BR.errorMessage);
+        notifyPropertyChanged(BR.isVisible);
     }
 }
