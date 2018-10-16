@@ -67,9 +67,9 @@ public class AppleMusicRequestHandler extends JSONFetcher{
                                 Object album = albumsData.get(i);
 
                                 albums.add(new Album(
-                                        (String)getValue(album, ".name"),
-                                        (String)getValue(album, ".artistName"),
-                                        (String)getValue(album, ".artworkUrl100")
+                                    (String)getValue(album, ".name"),
+                                    (String)getValue(album, ".artistName"),
+                                    (String)getValue(album, ".artworkUrl100")
                                 ));
                             }
 

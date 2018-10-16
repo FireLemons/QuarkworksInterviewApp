@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".MusicListView">
-    <data>
-        <import type="android.view.View"/>
-        <variable name="error" type="com.example.fly_s_y.applemusicalbumviewer.ErrorDisplay"/>
-    </data>
     <RelativeLayout
         android:layout_height="match_parent"
         android:layout_width="match_parent">
@@ -16,25 +14,11 @@
             android:scrollbars="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-        <RelativeLayout
+        <fragment
+            android:name="com.example.fly_s_y.applemusicalbumviewer.ErrorScreen"
             android:id="@+id/errorScreen"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/error"
-            android:visibility="@{error.isVisible ? View.VISIBLE : View.GONE}">
-
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_height="match_parent"
-                    android:layout_width="match_parent"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    android:textSize="16pt"
-                    android:text="@{error.errorMessage}"/>
-            </ScrollView>
-            <include layout="@layout/load_screen"/>
-        </RelativeLayout>
+            android:layout_height="match_parent"/>
+        <include layout="@layout/load_screen"/>
     </RelativeLayout>
-</layout>
+</android.support.constraint.ConstraintLayout>
