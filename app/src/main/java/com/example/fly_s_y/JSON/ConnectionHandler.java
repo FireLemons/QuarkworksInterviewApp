@@ -1,5 +1,7 @@
 package com.example.fly_s_y.JSON;
 
+import android.content.Context;
+
 import java.io.IOException;
 
 /**
@@ -20,9 +22,8 @@ public class ConnectionHandler {
      *      false otherwise
      */
     public boolean isConnection() {
-        
-
         Runtime runtime = Runtime.getRuntime();
+
         try {
             Process ipProcess = runtime.exec("/system/bin/ping -c 1 " + domain);
             int     exitValue = ipProcess.waitFor();
