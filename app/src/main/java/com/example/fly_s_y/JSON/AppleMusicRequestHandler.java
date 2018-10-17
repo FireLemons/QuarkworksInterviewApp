@@ -29,7 +29,7 @@ public class AppleMusicRequestHandler extends JSONFetcher{
         super("https://", "rss.itunes.apple.com", errorDisplay);
     }
 
-    public void getAlbumData(final AlbumAdapter adapter, final AlbumList albumList, final Activity mainActivity, final View loadScreen){
+    public void getAlbumData(final AlbumAdapter adapter, final AlbumList albumList, final Activity mainActivity, final View loadOverlay, final View loadBar){
         fetchJSON("/api/v1/us/apple-music/top-albums/all/10/explicit.json", new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -86,7 +86,11 @@ public class AppleMusicRequestHandler extends JSONFetcher{
                         mainActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                loadScreen.setVisibility(View.GONE);
+                                loadBar.setVisibility(View.GONE);
+
+                                if(loadOverlay.getVisibility() == View.VISIBLE){
+                                    loadOverlay.setVisibility(View.GONE);
+                                }
                             }
                         });
                     } catch (JSONException ex){

@@ -2,14 +2,26 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
 
-    android:id="@+id/loadScreen"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:gravity="center">
-
+    android:layout_height="match_parent">
     <ProgressBar
-        android:layout_width="256dp"
-        android:layout_height="256dp"
-        android:indeterminate="true"/>
+        android:id="@+id/loadBar"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_alignParentBottom="true"
+        android:indeterminate="true"
+        android:scaleY="8"
+        style="?android:attr/progressBarStyleHorizontal"/>
+    <FrameLayout
+        android:id="@+id/loadOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+        <ProgressBar
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            style="?android:attr/progressBarStyleLarge"/>
+    </FrameLayout>
 </RelativeLayout>

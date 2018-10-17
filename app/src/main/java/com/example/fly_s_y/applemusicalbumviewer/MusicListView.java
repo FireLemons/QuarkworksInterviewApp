@@ -4,7 +4,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.example.fly_s_y.JSON.AppleMusicRequestHandler;
@@ -16,7 +15,8 @@ public class MusicListView extends AppCompatActivity {
     private AppleMusicRequestHandler handler;
     private ErrorDisplay error;
     private RecyclerView albumList;
-    private View loadScreen;
+    private View loadBar;
+    private View loadOverlay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,8 @@ public class MusicListView extends AppCompatActivity {
         setContentView(R.layout.activity_music_list_view);
 
         albumList = findViewById(R.id.album_list_view);
-        loadScreen = findViewById(R.id.loadScreen);
+        loadBar = findViewById(R.id.loadBar);
+        loadOverlay = findViewById(R.id.loadOverlay);
         albumListData = new AlbumList(null, null);
         albumAdapter = new AlbumAdapter(albumListData);
         error = new ErrorDisplay();
@@ -37,16 +38,15 @@ public class MusicListView extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        loadScreen.setVisibility(View.VISIBLE);
         super.onResume();
-
+        loadBar.setVisibility(View.VISIBLE);
         if(handler.isConnection()){
-            handler.getAlbumData(albumAdapter, albumListData, this, loadScreen);
+            handler.getAlbumData(albumAdapter, albumListData, this, loadOverlay, loadBar);
 
             if(error.getIsVisible()){
                 error.clearError();
             }
-        } else if(!error.getIsVisible()){
+        } else if(albumListData.getAlbumList().isEmpty()){
             error.setError("Could not connect to iTunes' RSS feed");
         }
     }
