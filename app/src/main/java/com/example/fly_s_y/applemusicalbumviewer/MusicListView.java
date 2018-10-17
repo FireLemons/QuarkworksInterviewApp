@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.fly_s_y.JSON.AppleMusicRequestHandler;
 
@@ -41,6 +42,10 @@ public class MusicListView extends AppCompatActivity {
         super.onResume();
         loadBar.setVisibility(View.VISIBLE);
 
+        if(albumListData.getAlbumList() == null || albumListData.getAlbumList().isEmpty()){
+            loadOverlay.setVisibility(View.VISIBLE);
+        }
+
         if(handler.isConnection()){
             handler.getAlbumData(albumAdapter, albumListData, this, loadOverlay, loadBar);
 
@@ -51,6 +56,9 @@ public class MusicListView extends AppCompatActivity {
             loadBar.setVisibility(View.GONE);
             loadOverlay.setVisibility(View.GONE);
             error.setError("Could not connect to iTunes' RSS feed");
+        } else {
+            loadBar.setVisibility(View.GONE);
+            Toast.makeText(getApplicationContext(), "Could not refresh list", Toast.LENGTH_SHORT).show();
         }
     }
 
