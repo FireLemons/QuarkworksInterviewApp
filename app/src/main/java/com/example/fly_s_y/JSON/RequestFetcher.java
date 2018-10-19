@@ -16,7 +16,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
 /**
- * Handles fetching JSON from a single domain.
+ * Handles fetching requests from a single domain.
  */
 public class JSONFetcher extends ConnectionHandler {
     protected OkHttpClient client;
@@ -138,7 +138,7 @@ public class JSONFetcher extends ConnectionHandler {
      *  Either a JSONObject or a JSONArray on success
      *  Null on failure
      */
-    protected void fetchJSON(String path, Callback callback){
+    protected void fetchRequest(String path, Callback callback){
         Request JSONAlbumRequest = new Request.Builder().url(scheme + domain + path).build();
         Call call = client.newCall(JSONAlbumRequest);
 
