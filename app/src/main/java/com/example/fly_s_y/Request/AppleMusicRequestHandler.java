@@ -1,7 +1,6 @@
-package com.example.fly_s_y.JSON;
+package com.example.fly_s_y.Request;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.View;
 
 import com.example.fly_s_y.applemusicalbumviewer.Album;
@@ -23,14 +22,14 @@ import okhttp3.Response;
 /**
  * Handles requesting JSON from the iTunes RSS feed
  */
-public class AppleMusicRequestHandler extends JSONFetcher{
+public class AppleMusicRequestHandler extends RequestFetcher {
 
     public AppleMusicRequestHandler(ErrorDisplay errorDisplay){
         super("https://", "rss.itunes.apple.com", errorDisplay);
     }
 
     public void getAlbumData(final AlbumAdapter adapter, final AlbumList albumList, final Activity mainActivity, final View loadOverlay, final View loadBar){
-        fetchJSON("/api/v1/us/apple-music/top-albums/all/10/explicit.json", new Callback() {
+        fetchRequest("/api/v1/us/apple-music/top-albums/all/10/explicit.json", new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 errorDisplay.setError(e.toString());
@@ -64,13 +63,17 @@ public class AppleMusicRequestHandler extends JSONFetcher{
                             ArrayList<Album> albums = new ArrayList<Album>();
 
                             for(int i = 0; i < albumsData.length(); i++){
-                                Object album = albumsData.get(i);
+                                Object albumJSON = albumsData.get(i);
 
-                                albums.add(new Album(
-                                    (String)getValue(album, ".name"),
-                                    (String)getValue(album, ".artistName"),
-                                    (String)getValue(album, ".artworkUrl100")
-                                ));
+                                Album albumData = new Album(
+                                        (String)getValue(albumJSON, ".name"),
+                                        (String)getValue(albumJSON, ".artistName"),
+                                        null
+                                );
+
+                                albums.add(albumData);
+
+                                loadAlbumImage((String)getValue(albumJSON, ".artworkUrl100"), adapter, albumData, i);
                             }
 
                             albumList.setAlbumList(albums);
@@ -99,5 +102,9 @@ public class AppleMusicRequestHandler extends JSONFetcher{
                 }
             }
         });
+    }
+
+    public void loadAlbumImage(String imageURL, final AlbumAdapter albumAdapter, final Album album, int albumInde0x){
+
     }
 }

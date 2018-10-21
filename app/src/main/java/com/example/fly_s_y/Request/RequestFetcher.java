@@ -1,4 +1,4 @@
-package com.example.fly_s_y.JSON;
+package com.example.fly_s_y.Request;
 
 import com.example.fly_s_y.applemusicalbumviewer.ErrorDisplay;
 
@@ -18,12 +18,12 @@ import okhttp3.Request;
 /**
  * Handles fetching requests from a single domain.
  */
-public class JSONFetcher extends ConnectionHandler {
+public class RequestFetcher extends ConnectionHandler {
     protected OkHttpClient client;
     protected ErrorDisplay errorDisplay;
     protected String scheme;
 
-    public JSONFetcher(String scheme, String domain, ErrorDisplay errorDisplay) {
+    public RequestFetcher(String scheme, String domain, ErrorDisplay errorDisplay) {
         super(domain);
 
         this.errorDisplay = errorDisplay;
@@ -139,8 +139,8 @@ public class JSONFetcher extends ConnectionHandler {
      *  Null on failure
      */
     protected void fetchRequest(String path, Callback callback){
-        Request JSONAlbumRequest = new Request.Builder().url(scheme + domain + path).build();
-        Call call = client.newCall(JSONAlbumRequest);
+        Request request = new Request.Builder().url(scheme + domain + path).build();
+        Call call = client.newCall(request);
 
         call.enqueue(callback);
     }
