@@ -14,7 +14,7 @@ public class ErrorScreen extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.error_screen, container, false);//ActivityMusicListViewBinding.inflate(inflater, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.error_screen, container, false);
 
         return binding.getRoot();
     }
