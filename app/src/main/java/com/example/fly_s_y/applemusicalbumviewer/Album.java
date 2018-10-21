@@ -1,15 +1,18 @@
 package com.example.fly_s_y.applemusicalbumviewer;
 
+import android.graphics.Bitmap;
+
 /**
  * Class representing a single album
  */
 public class Album {
-    private String albumName, artistName, imageLink;
+    private String albumName, artistName;
+    private Bitmap albumImage;
 
-    public Album(String albumName, String artistName, String imageLink){
+    public Album(String albumName, String artistName, Bitmap albumImage){
         this.albumName = albumName;
         this.artistName = artistName;
-        this.imageLink = imageLink;
+        this.albumImage = albumImage;
     }
 
     public String getAlbumName(){
@@ -20,7 +23,11 @@ public class Album {
         return artistName;
     }
 
-    public String getImageLink(){
-        return imageLink;
+    public Bitmap getAlbumImage() {
+        return albumImage;
+    }
+
+    public void setAlbumImage(Bitmap albumImage) {
+        this.albumImage = albumImage;
     }
 }

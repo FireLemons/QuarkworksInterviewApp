@@ -1,6 +1,6 @@
 package com.example.fly_s_y.applemusicalbumviewer;
 
-import com.example.fly_s_y.JSON.JSONFetcher;
+import com.example.fly_s_y.Request.RequestFetcher;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -10,9 +10,9 @@ import org.junit.Test;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
-public class JSONAccessorTestSuite extends JSONFetcher {
+public class JSONAccessorTestSuite extends RequestFetcher {
     public JSONAccessorTestSuite() {
-        super("", new ErrorDisplay());
+        super("", "", new ErrorDisplay());
     }
 
     @Test (expected = IllegalArgumentException.class)

@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.fly_s_y.JSON.AppleMusicRequestHandler;
+import com.example.fly_s_y.Request.AppleMusicRequestHandler;
 
 public class MusicListView extends AppCompatActivity {
 
