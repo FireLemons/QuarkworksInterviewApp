@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder>{
@@ -13,12 +14,14 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
     public class AlbumViewHolder extends RecyclerView.ViewHolder {
         public TextView albumName,
                         artistName;
+        public ImageView albumArt;
 
         public AlbumViewHolder(View itemView) {
             super(itemView);
 
             albumName = itemView.findViewById(R.id.albumName);
             artistName = itemView.findViewById(R.id.artistName);
+            albumArt = itemView.findViewById(R.id.albumArt);
         }
     }
 
@@ -45,6 +48,10 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
 
             holder.albumName.setText(album.getAlbumName());
             holder.artistName.setText("by " + album.getArtistName());
+
+            if(album.getAlbumImage() != null){
+                holder.albumArt.setImageBitmap(album.getAlbumImage());
+            }
         }
     }
 

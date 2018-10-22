@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.example.fly_s_y.applemusicalbumviewer.databinding.ErrorScreenBinding;
 
-public class ErrorScreen extends Fragment {
+public class ErrorModalFragment extends Fragment {
     private ErrorScreenBinding binding;
 
     @Override

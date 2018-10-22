@@ -14,6 +14,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -39,72 +41,88 @@ public class AppleMusicRequestHandler extends RequestFetcher {
             public void onResponse(Call call, Response response) throws IOException {
                 String responseString = response.body().string();
 
-                if(responseString != null && responseString.length() > 0){
-                    Object data;
+                //Error check
+                if(responseString == null || responseString.length() == 0){
+                    errorDisplay.setError("Empty response on attempt to fetch album data.");
+                    return;
+                }
 
-                    try{
-                        switch(responseString.charAt(0)){
-                            case '[':
-                                data = new JSONArray(responseString);
-                                break;
-                            case '{':
-                                data = new JSONObject(responseString);
-                                break;
-                            default:
-                                throw new JSONException("Could not convert response to JSON Object");
-                        }
+                Object data;
 
-                        String updated = (String)getValue(data, ".feed.updated");
-
-                        if(!updated.equals(albumList.getLastUpdated())){
-                            albumList.setLastUpdated(updated);
-
-                            JSONArray albumsData = (JSONArray) getValue(data, ".feed.results");
-                            ArrayList<Album> albums = new ArrayList<Album>();
-
-                            for(int i = 0; i < albumsData.length(); i++){
-                                Object albumJSON = albumsData.get(i);
-
-                                Album albumData = new Album(
-                                        (String)getValue(albumJSON, ".name"),
-                                        (String)getValue(albumJSON, ".artistName"),
-                                        null
-                                );
-
-                                albums.add(albumData);
-
-                                loadAlbumImage((String)getValue(albumJSON, ".artworkUrl100"), adapter, albumData, i);
-                            }
-
-                            albumList.setAlbumList(albums);
-
-                            mainActivity.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    adapter.notifyDataSetChanged();
-                                }
-                            });
-                        }
-
-                        mainActivity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                loadBar.setVisibility(View.GONE);
-
-                                if(loadOverlay.getVisibility() == View.VISIBLE){
-                                    loadOverlay.setVisibility(View.GONE);
-                                }
-                            }
-                        });
-                    } catch (JSONException ex){
-                        errorDisplay.setError(ex.getMessage());
+                try{
+                    switch(responseString.charAt(0)){
+                        case '[':
+                            data = new JSONArray(responseString);
+                            break;
+                        case '{':
+                            data = new JSONObject(responseString);
+                            break;
+                        default:
+                            throw new JSONException("Could not convert response to JSON Object");
                     }
+
+                    String updated = (String)getValue(data, ".feed.updated");
+
+                    if(!updated.equals(albumList.getLastUpdated())){
+                        loadUpdatedAlbumData(data);
+                        albumList.setLastUpdated(updated);
+                    }
+
+                    mainActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            loadBar.setVisibility(View.GONE);
+
+                            if(loadOverlay.getVisibility() == View.VISIBLE){
+                                loadOverlay.setVisibility(View.GONE);
+                            }
+                        }
+                    });
+                } catch (JSONException ex){
+                    errorDisplay.setError(ex.getMessage());
                 }
             }
+
+            /**
+             * Loads updated album data into bound models
+             * @param data The updated parsed JSON object containing album data
+             * @throws JSONException
+             */
+            private void loadUpdatedAlbumData(Object data) throws JSONException {
+                JSONArray albumsData = (JSONArray) getValue(data, ".feed.results");
+                ArrayList<Album> albums = new ArrayList<>();
+
+                for(int i = 0; i < albumsData.length(); i++){
+                    Object albumJSON = albumsData.get(i);
+
+                    Album albumData = new Album(
+                            (String)getValue(albumJSON, ".name"),
+                            (String)getValue(albumJSON, ".artistName"),
+                            null
+                    );
+
+                    albums.add(albumData);
+
+                    Pattern websitePath = Pattern.compile("https://(is[0-9]-ssl\\.mzstatic\\.com)(.*)");
+                    Matcher urlParser = websitePath.matcher((String)getValue(albumJSON, ".artworkUrl100"));
+
+                    if(urlParser.find() && urlParser.groupCount() >= 2){
+                        AlbumArtRequestHandler artFetcher = new AlbumArtRequestHandler(urlParser.group(1), errorDisplay);
+                        artFetcher.loadAlbumImage(adapter, albumData, i, urlParser.group(2), mainActivity);
+                    } else {
+                        errorDisplay.setError("Error parsing album art url.");
+                    }
+                }
+
+                albumList.setAlbumList(albums);
+
+                mainActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+            }
         });
-    }
-
-    public void loadAlbumImage(String imageURL, final AlbumAdapter albumAdapter, final Album album, int albumInde0x){
-
     }
 }
