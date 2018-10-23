@@ -48,17 +48,13 @@ public class MusicListView extends AppCompatActivity {
 
         if(handler.isConnection()){
             handler.getAlbumData(albumAdapter, albumListData, this, loadOverlay, loadBar);
-
-            if(error.getIsVisible()){
-                error.clearError();
-            }
         } else if(albumListData.getAlbumList() == null || albumListData.getAlbumList().isEmpty()){
             loadBar.setVisibility(View.GONE);
             loadOverlay.setVisibility(View.GONE);
-            error.setError("Could not connect to iTunes' RSS feed");
+            error.setError("Failed to connect to iTunes' RSS feed");
         } else {
             loadBar.setVisibility(View.GONE);
-            Toast.makeText(getApplicationContext(), "Could not refresh list", Toast.LENGTH_SHORT).show();
+            error.setWarning("Could not refresh album data.");
         }
     }
 

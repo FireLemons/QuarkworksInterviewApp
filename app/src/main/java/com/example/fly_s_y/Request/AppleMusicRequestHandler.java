@@ -24,7 +24,7 @@ import okhttp3.Response;
 /**
  * Handles requesting JSON from the iTunes RSS feed
  */
-public class AppleMusicRequestHandler extends RequestFetcher {
+public class AppleMusicRequestHandler extends JSONRequestFetcher {
 
     public AppleMusicRequestHandler(ErrorDisplay errorDisplay){
         super("https://", "rss.itunes.apple.com", errorDisplay);
@@ -108,7 +108,11 @@ public class AppleMusicRequestHandler extends RequestFetcher {
 
                     if(urlParser.find() && urlParser.groupCount() >= 2){
                         AlbumArtRequestHandler artFetcher = new AlbumArtRequestHandler(urlParser.group(1), errorDisplay);
-                        artFetcher.loadAlbumImage(adapter, albumData, i, urlParser.group(2), mainActivity);
+                        if(artFetcher.isConnection()){
+                            artFetcher.loadAlbumImage(adapter, albumData, i, urlParser.group(2), mainActivity);
+                        } else {
+                            errorDisplay.setWarning("Failed to load album art.");
+                        }
                     } else {
                         errorDisplay.setError("Error parsing album art url.");
                     }
