@@ -32,7 +32,7 @@ public class ErrorModalFragment extends Fragment implements View.OnClickListener
 
         binding.setError(errorModel = ((MusicListView)getActivity()).getError());
     }
-    
+
     @Override
     public void onClick(View view) {
         errorModel.clearError();
