@@ -46,9 +46,10 @@ public class ErrorDisplay extends BaseObservable {
 
 
     public void clearError(){
-        message = "";
         isVisible = false;
+        message = "";
         notifyPropertyChanged(BR.isVisible);
+        notifyPropertyChanged(BR.message);
     }
 
     /**
