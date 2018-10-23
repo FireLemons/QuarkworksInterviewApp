@@ -3,23 +3,32 @@ package com.example.fly_s_y.applemusicalbumviewer;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
+/**
+ * Model class for the error modal
+ */
 public class ErrorDisplay extends BaseObservable {
-    private boolean isVisible;
-    private String errorMessage;
+    private boolean isVisible, isError;
+    private String message;
 
     public ErrorDisplay(){
         isVisible = false;
-        errorMessage = "";
+        message = "";
     }
 
-    public ErrorDisplay(String errorMessage){
-        isVisible = false;
-        this.errorMessage = errorMessage;
+    public ErrorDisplay(String message){
+        this.isVisible = false;
+        this.message = message;
     }
 
-    public ErrorDisplay(boolean isVisible, String errorMessage){
+    public ErrorDisplay(boolean isVisible, String message){
         this.isVisible = isVisible;
-        this.errorMessage = errorMessage;
+        this.message = message;
+    }
+
+    public ErrorDisplay(boolean isError, boolean isVisible, String message){
+        this.isError = isError;
+        this.isVisible = isVisible;
+        this.message = message;
     }
 
     @Bindable
@@ -28,20 +37,49 @@ public class ErrorDisplay extends BaseObservable {
     }
 
     @Bindable
-    public String getErrorMessage(){
-        return errorMessage;
+    public boolean getIsError(){ return isError; }
+
+    @Bindable
+    public String getMessage(){
+        return message;
     }
 
+
     public void clearError(){
-        errorMessage = "";
+        message = "";
         isVisible = false;
         notifyPropertyChanged(BR.isVisible);
     }
 
-    public void setError(String errorMessage) {
-        this.errorMessage = errorMessage;
-        isVisible = true;
-        notifyPropertyChanged(BR.errorMessage);
+    /**
+     * Display an error via the error modal
+     * @param error A string describing the cause of the error
+     */
+    public void setError(String error) {
+        this.message = error;
+        this.isVisible = true;
+        notifyPropertyChanged(BR.message);
         notifyPropertyChanged(BR.isVisible);
+
+        if(this.isError == false){
+            this.isError = true;
+            notifyPropertyChanged(BR.isError);
+        }
+    }
+
+    /**
+     * Displays a warning via the error modal
+     * @param warning A string describing why the user is seeing the warning
+     */
+    public void setWarning(String warning){
+        this.message = warning;
+        this.isVisible = true;
+        notifyPropertyChanged(BR.message);
+        notifyPropertyChanged(BR.isVisible);
+
+        if(this.isError == true){
+            this.isError = false;
+            notifyPropertyChanged(BR.isError);
+        }
     }
 }

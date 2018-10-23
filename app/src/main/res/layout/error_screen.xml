@@ -1,26 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <import type="android.view.View"/>
         <variable name="error" type="com.example.fly_s_y.applemusicalbumviewer.ErrorDisplay"/>
     </data>
-    <RelativeLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/error"
+        android:padding="40dp"
+        android:orientation="vertical"
         android:visibility="@{error.isVisible ? View.VISIBLE : View.GONE}">
+        <RelativeLayout
+            android:id="@+id/errorHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@{error.isError ? @color/errorDark : @color/warningDark}">
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/dismissButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@{error.isError ? @drawable/dismiss_error_background : @drawable/dismiss_warning_background}"
+                android:textColor="@{error.isError ? @color/white : @color/black}"
+                android:textSize="12pt"
+                android:text="@string/errorDismissal"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/dismissButton"
+                android:padding="8dp"
+                android:textColor="@{error.isError ? @color/white : @color/black}"
+                android:textSize="12pt"
+                android:text="@{error.isError ? @string/errorHeader : @string/warningHeader}" />
+        </RelativeLayout>
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp"
+            app:layout_constraintHeight_percent=".8"
+            app:layout_constraintTop_toBottomOf="@+id/errorHeader"
+            android:background="@{error.isError ? @color/error : @color/warning}">
             <TextView
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
+                android:padding="8dp"
                 android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="16pt"
-                android:text="@{error.errorMessage}"/>
+                android:textColor="@{error.isError ? @color/white : @color/black}"
+                android:textSize="8pt"
+                android:text="@{error.message}"/>
         </ScrollView>
-    </RelativeLayout>
+    </android.support.constraint.ConstraintLayout>
 </layout>
