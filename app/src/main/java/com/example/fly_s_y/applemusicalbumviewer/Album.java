@@ -1,11 +1,19 @@
 package com.example.fly_s_y.applemusicalbumviewer;
 
+import android.app.Activity;
 import android.content.res.Resources;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+
+import com.example.fly_s_y.Request.AlbumArtRequestHandler;
+
+import org.json.JSONException;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Class representing a single album
@@ -47,5 +55,29 @@ public class Album extends BaseObservable {
     public void setAlbumArt(BitmapDrawable albumArt) {
         this.albumArt = albumArt;
         notifyPropertyChanged(BR.albumArt);
+    }
+
+    /**
+     * Loads the album art into the album's model
+     * @param adapter The adapter used to render the album data in the UI
+     * @param albumIndex The index of the album in the albumAdapter's list of albums
+     * @param errorDisplay The model the error notifier is bound to
+     * @param mainActivity The activity containing the album list
+     * @throws JSONException
+     */
+    public void loadAlbumArt(AlbumAdapter adapter, int albumIndex, ErrorDisplay errorDisplay, Activity mainActivity) {
+        Pattern websitePath = Pattern.compile("https://(is[0-9]-ssl\\.mzstatic\\.com)(.*)");
+        Matcher urlParser = websitePath.matcher(albumArtURL);
+
+        if(urlParser.find() && urlParser.groupCount() >= 2){
+            AlbumArtRequestHandler artFetcher = new AlbumArtRequestHandler(urlParser.group(1), errorDisplay);
+            if(artFetcher.isConnection()){
+                artFetcher.loadAlbumImage(adapter, this, albumIndex, urlParser.group(2), mainActivity);
+            } else {
+                errorDisplay.setWarning("Failed to load album art.");
+            }
+        } else {
+            errorDisplay.setError("Error parsing album art url.");
+        }
     }
 }

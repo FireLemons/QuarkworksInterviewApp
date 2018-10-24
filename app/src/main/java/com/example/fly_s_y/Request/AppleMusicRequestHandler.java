@@ -108,8 +108,7 @@ public class AppleMusicRequestHandler extends JSONRequestFetcher {
                     );
 
                     albums.add(albumData);
-
-                    loadAlbumArt(albumData, i);
+                    albumData.loadAlbumArt(adapter, i, errorDisplay, mainActivity);
                 }
 
                 albumList.setAlbumList(albums);
@@ -120,28 +119,6 @@ public class AppleMusicRequestHandler extends JSONRequestFetcher {
                         adapter.notifyDataSetChanged();
                     }
                 });
-            }
-
-            /**
-             * Loads the album art into the album's model
-             * @param albumData The album's data model
-             * @param albumIndex The index of the album in the albumAdapter's list of albums
-             * @throws JSONException
-             */
-            private void loadAlbumArt(Album albumData, int albumIndex) {
-                Pattern websitePath = Pattern.compile("https://(is[0-9]-ssl\\.mzstatic\\.com)(.*)");
-                Matcher urlParser = websitePath.matcher(albumData.getAlbumArtURL());
-
-                if(urlParser.find() && urlParser.groupCount() >= 2){
-                    AlbumArtRequestHandler artFetcher = new AlbumArtRequestHandler(urlParser.group(1), errorDisplay);
-                    if(artFetcher.isConnection()){
-                        artFetcher.loadAlbumImage(adapter, albumData, albumIndex, urlParser.group(2), mainActivity);
-                    } else {
-                        errorDisplay.setWarning("Failed to load album art.");
-                    }
-                } else {
-                    errorDisplay.setError("Error parsing album art url.");
-                }
             }
         });
     }
