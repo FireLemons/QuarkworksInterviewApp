@@ -7,6 +7,7 @@ import com.example.fly_s_y.applemusicalbumviewer.Album;
 import com.example.fly_s_y.applemusicalbumviewer.AlbumAdapter;
 import com.example.fly_s_y.applemusicalbumviewer.AlbumList;
 import com.example.fly_s_y.applemusicalbumviewer.ErrorDisplay;
+import com.example.fly_s_y.applemusicalbumviewer.MusicListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,7 +31,13 @@ public class AppleMusicRequestHandler extends JSONRequestFetcher {
         super("https://", "rss.itunes.apple.com", errorDisplay);
     }
 
-    public void getAlbumData(final AlbumAdapter adapter, final AlbumList albumList, final Activity mainActivity, final View loadOverlay, final View loadBar){
+    /**
+     * Fetches JSON data for the top 10 albums in iTunes and loads it into album models
+     * @param adapter The adapter for rendering the data as a list in a recycleview
+     * @param albumList The Object holding the parsed JSON data
+     * @param mainActivity The activity containing the Recycleview displaying the albums
+     */
+    public void getAlbumData(final AlbumAdapter adapter, final AlbumList albumList, final MusicListView mainActivity){
         fetchRequest("/api/v1/us/apple-music/top-albums/all/10/explicit.json", new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -71,11 +78,8 @@ public class AppleMusicRequestHandler extends JSONRequestFetcher {
                     mainActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            loadBar.setVisibility(View.GONE);
-
-                            if(loadOverlay.getVisibility() == View.VISIBLE){
-                                loadOverlay.setVisibility(View.GONE);
-                            }
+                            mainActivity.dismissLoadBar();
+                            mainActivity.dismissLoadOverlay();
                         }
                     });
                 } catch (JSONException ex){

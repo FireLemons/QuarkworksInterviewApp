@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.fly_s_y.Request.AppleMusicRequestHandler;
 
@@ -47,7 +46,7 @@ public class MusicListView extends AppCompatActivity {
         }
 
         if(handler.isConnection()){
-            handler.getAlbumData(albumAdapter, albumListData, this, loadOverlay, loadBar);
+            handler.getAlbumData(albumAdapter, albumListData, this);
         } else if(albumListData.getAlbumList() == null || albumListData.getAlbumList().isEmpty()){
             loadBar.setVisibility(View.GONE);
             loadOverlay.setVisibility(View.GONE);
@@ -60,5 +59,13 @@ public class MusicListView extends AppCompatActivity {
 
     public ErrorDisplay getError(){
         return this.error;
+    }
+
+    public void dismissLoadOverlay(){
+        loadOverlay.setVisibility(View.GONE);
+    }
+
+    public void dismissLoadBar(){
+        loadBar.setVisibility(View.GONE);
     }
 }

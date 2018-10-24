@@ -14,6 +14,9 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
+/**
+ * Handles requests to fetch album art from iTunes
+ */
 public class AlbumArtRequestHandler extends RequestFetcher {
 
     public AlbumArtRequestHandler(String domain, ErrorDisplay errorDisplay) {
