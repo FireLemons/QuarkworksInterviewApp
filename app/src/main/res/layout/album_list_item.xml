@@ -30,19 +30,19 @@
             android:layout_toRightOf="@id/albumArt"
             android:orientation="vertical">
             <TextView
-                android:id="@+id/albumName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:singleLine="true"
                 android:textColor="@color/white"
-                android:textSize="10pt"/>
+                android:textSize="10pt"
+                android:text="@{album.albumName}"/>
             <TextView
-                android:id="@+id/artistName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                android:text="@{album.artistName}"/>
         </LinearLayout>
     </RelativeLayout>
 </layout>
