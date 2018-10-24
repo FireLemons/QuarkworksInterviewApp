@@ -46,7 +46,7 @@ public class MusicListView extends AppCompatActivity {
             loadOverlay.setVisibility(View.VISIBLE);
         }
 
-        if(true){//handler.isConnection()){
+        if(handler.isConnection()){
             handler.getAlbumData(albumAdapter, albumListData, this, loadOverlay, loadBar);
         } else if(albumListData.getAlbumList() == null || albumListData.getAlbumList().isEmpty()){
             loadBar.setVisibility(View.GONE);
