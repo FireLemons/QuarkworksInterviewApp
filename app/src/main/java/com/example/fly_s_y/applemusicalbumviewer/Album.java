@@ -61,11 +61,11 @@ public class Album extends BaseObservable {
      * Loads the album art into the album's model
      * @param adapter The adapter used to render the album data in the UI
      * @param albumIndex The index of the album in the albumAdapter's list of albums
-     * @param errorDisplay The model the error notifier is bound to
      * @param mainActivity The activity containing the album list
      * @throws JSONException
      */
-    public void loadAlbumArt(AlbumAdapter adapter, int albumIndex, ErrorDisplay errorDisplay, Activity mainActivity) {
+    public void loadAlbumArt(AlbumAdapter adapter, int albumIndex, MusicListView mainActivity) {
+        ErrorDisplay errorDisplay = mainActivity.getError();
         Pattern websitePath = Pattern.compile("https://(is[0-9]-ssl\\.mzstatic\\.com)(.*)");
         Matcher urlParser = websitePath.matcher(albumArtURL);
 

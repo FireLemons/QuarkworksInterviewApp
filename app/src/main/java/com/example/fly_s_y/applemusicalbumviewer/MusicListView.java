@@ -36,6 +36,9 @@ public class MusicListView extends AppCompatActivity {
         handler = new AppleMusicRequestHandler(error);
     }
 
+    /**
+     * Refreshes album data if needed
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -57,14 +60,23 @@ public class MusicListView extends AppCompatActivity {
         }
     }
 
+    /**
+     * @return The model used to display errors in the UI
+     */
     public ErrorDisplay getError(){
         return this.error;
     }
 
+    /**
+     * Hides the loading overlay
+     */
     public void dismissLoadOverlay(){
         loadOverlay.setVisibility(View.GONE);
     }
 
+    /**
+     * Hides a linear load indicator at the bottom of the screen
+     */
     public void dismissLoadBar(){
         loadBar.setVisibility(View.GONE);
     }

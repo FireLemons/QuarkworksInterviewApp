@@ -1,8 +1,5 @@
 package com.example.fly_s_y.Request;
 
-import android.app.Activity;
-import android.view.View;
-
 import com.example.fly_s_y.applemusicalbumviewer.Album;
 import com.example.fly_s_y.applemusicalbumviewer.AlbumAdapter;
 import com.example.fly_s_y.applemusicalbumviewer.AlbumList;
@@ -15,8 +12,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -108,7 +103,7 @@ public class AppleMusicRequestHandler extends JSONRequestFetcher {
                     );
 
                     albums.add(albumData);
-                    albumData.loadAlbumArt(adapter, i, errorDisplay, mainActivity);
+                    albumData.loadAlbumArt(adapter, i, mainActivity);
                 }
 
                 albumList.setAlbumList(albums);
