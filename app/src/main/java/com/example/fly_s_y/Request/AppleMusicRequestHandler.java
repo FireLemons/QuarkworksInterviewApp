@@ -100,6 +100,7 @@ public class AppleMusicRequestHandler extends JSONRequestFetcher {
                     Object albumJSON = albumsData.get(i);
 
                     Album albumData = new Album(
+                            (String)getValue(albumJSON, ".artworkUrl100"),
                             (String)getValue(albumJSON, ".name"),
                             (String)getValue(albumJSON, ".artistName"),
                             null,
@@ -108,7 +109,7 @@ public class AppleMusicRequestHandler extends JSONRequestFetcher {
 
                     albums.add(albumData);
 
-                    loadAlbumArt(albumData, i, albumJSON);
+                    loadAlbumArt(albumData, i);
                 }
 
                 albumList.setAlbumList(albums);
@@ -125,12 +126,11 @@ public class AppleMusicRequestHandler extends JSONRequestFetcher {
              * Loads the album art into the album's model
              * @param albumData The album's data model
              * @param albumIndex The index of the album in the albumAdapter's list of albums
-             * @param albumJSON The JSON object containing the URL of the album art to be loaded
              * @throws JSONException
              */
-            private void loadAlbumArt(Album albumData, int albumIndex, Object albumJSON) throws JSONException {
+            private void loadAlbumArt(Album albumData, int albumIndex) {
                 Pattern websitePath = Pattern.compile("https://(is[0-9]-ssl\\.mzstatic\\.com)(.*)");
-                Matcher urlParser = websitePath.matcher((String)getValue(albumJSON, ".artworkUrl100"));
+                Matcher urlParser = websitePath.matcher(albumData.getAlbumArtURL());
 
                 if(urlParser.find() && urlParser.groupCount() >= 2){
                     AlbumArtRequestHandler artFetcher = new AlbumArtRequestHandler(urlParser.group(1), errorDisplay);

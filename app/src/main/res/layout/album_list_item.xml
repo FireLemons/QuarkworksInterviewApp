@@ -22,7 +22,7 @@
             android:adjustViewBounds="true"
             android:layout_alignParentLeft="true"
             android:layout_marginRight="4dp"
-            app:src="@{album.albumImage}"/>
+            app:src="@{album.albumArt}"/>
         <LinearLayout
             android:id="@+id/albumLabel"
             android:layout_width="match_parent"

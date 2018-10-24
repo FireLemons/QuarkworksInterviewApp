@@ -12,8 +12,6 @@ import android.widget.TextView;
 
 import com.example.fly_s_y.applemusicalbumviewer.databinding.AlbumListItemBinding;
 
-import org.w3c.dom.Text;
-
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder>{
     private AlbumList albumList;
 
