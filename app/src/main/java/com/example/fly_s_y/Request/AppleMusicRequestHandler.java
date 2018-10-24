@@ -98,24 +98,13 @@ public class AppleMusicRequestHandler extends JSONRequestFetcher {
                     Album albumData = new Album(
                             (String)getValue(albumJSON, ".name"),
                             (String)getValue(albumJSON, ".artistName"),
-                            null
+                            null,
+                            mainActivity.getResources()
                     );
 
                     albums.add(albumData);
 
-                    Pattern websitePath = Pattern.compile("https://(is[0-9]-ssl\\.mzstatic\\.com)(.*)");
-                    Matcher urlParser = websitePath.matcher((String)getValue(albumJSON, ".artworkUrl100"));
-
-                    if(urlParser.find() && urlParser.groupCount() >= 2){
-                        AlbumArtRequestHandler artFetcher = new AlbumArtRequestHandler(urlParser.group(1), errorDisplay);
-                        if(artFetcher.isConnection()){
-                            artFetcher.loadAlbumImage(adapter, albumData, i, urlParser.group(2), mainActivity);
-                        } else {
-                            errorDisplay.setWarning("Failed to load album art.");
-                        }
-                    } else {
-                        errorDisplay.setError("Error parsing album art url.");
-                    }
+                    loadAlbumArt(albumData, i, albumJSON);
                 }
 
                 albumList.setAlbumList(albums);
@@ -126,6 +115,22 @@ public class AppleMusicRequestHandler extends JSONRequestFetcher {
                         adapter.notifyDataSetChanged();
                     }
                 });
+            }
+
+            private void loadAlbumArt(Album albumData, int albumIndex, Object albumJSON) throws JSONException {
+                Pattern websitePath = Pattern.compile("https://(is[0-9]-ssl\\.mzstatic\\.com)(.*)");
+                Matcher urlParser = websitePath.matcher((String)getValue(albumJSON, ".artworkUrl100"));
+
+                if(urlParser.find() && urlParser.groupCount() >= 2){
+                    AlbumArtRequestHandler artFetcher = new AlbumArtRequestHandler(urlParser.group(1), errorDisplay);
+                    if(artFetcher.isConnection()){
+                        artFetcher.loadAlbumImage(adapter, albumData, albumIndex, urlParser.group(2), mainActivity);
+                    } else {
+                        errorDisplay.setWarning("Failed to load album art.");
+                    }
+                } else {
+                    errorDisplay.setError("Error parsing album art url.");
+                }
             }
         });
     }

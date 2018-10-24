@@ -1,20 +1,28 @@
 package com.example.fly_s_y.applemusicalbumviewer;
 
+import android.content.res.Resources;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 
 /**
  * Class representing a single album
  */
 public class Album extends BaseObservable {
     private String albumName, artistName;
-    private Bitmap albumImage;
+    private Drawable albumImage;
 
-    public Album(String albumName, String artistName, Bitmap albumImage){
+    public Album(String albumName, String artistName, Drawable albumImage, Resources resources){
         this.albumName = albumName;
         this.artistName = artistName;
-        this.albumImage = albumImage;
+        if(albumImage != null){
+            this.albumImage = albumImage;
+        } else {
+            this.albumImage = new BitmapDrawable(BitmapFactory.decodeResource(resources, R.mipmap.broken_image));
+        }
     }
 
     @Bindable
@@ -28,11 +36,11 @@ public class Album extends BaseObservable {
     }
 
     @Bindable
-    public Bitmap getAlbumImage() {
+    public Drawable getAlbumImage() {
         return albumImage;
     }
 
-    public void setAlbumImage(Bitmap albumImage) {
+    public void setAlbumImage(BitmapDrawable albumImage) {
         this.albumImage = albumImage;
         notifyPropertyChanged(BR.albumImage);
     }

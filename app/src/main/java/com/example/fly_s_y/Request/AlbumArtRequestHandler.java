@@ -2,6 +2,7 @@ package com.example.fly_s_y.Request;
 
 import android.app.Activity;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 
 import com.example.fly_s_y.applemusicalbumviewer.Album;
 import com.example.fly_s_y.applemusicalbumviewer.AlbumAdapter;
@@ -30,7 +31,7 @@ public class AlbumArtRequestHandler extends RequestFetcher {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
 
-                album.setAlbumImage(BitmapFactory.decodeStream(response.body().byteStream()));
+                album.setAlbumImage(new BitmapDrawable(BitmapFactory.decodeStream(response.body().byteStream())));
 
                 mainActivity.runOnUiThread(new Runnable() {
                     @Override

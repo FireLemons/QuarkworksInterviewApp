@@ -1,27 +1,53 @@
 package com.example.fly_s_y.applemusicalbumviewer;
 
+import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.fly_s_y.applemusicalbumviewer.databinding.AlbumListItemBinding;
+
+import org.w3c.dom.Text;
+
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder>{
     private AlbumList albumList;
 
-    public class AlbumViewHolder extends RecyclerView.ViewHolder {
-        public TextView albumName,
-                        artistName;
+    public class AlbumViewHolder extends RecyclerView.ViewHolder{
+        private final AlbumListItemBinding binding;
+
         public ImageView albumArt;
+        public TextView albumName, artistName;
 
-        public AlbumViewHolder(View itemView) {
-            super(itemView);
+        public AlbumViewHolder(AlbumListItemBinding binding) {
+            super(binding.getRoot());
 
-            albumName = itemView.findViewById(R.id.albumName);
-            artistName = itemView.findViewById(R.id.artistName);
-            albumArt = itemView.findViewById(R.id.albumArt);
+            this.binding = binding;
+        }
+
+        public void setDetailsLauncherClickListener(View.OnClickListener listener){
+            itemView.setOnClickListener(listener);
+        }
+
+        public void setBinding(Album album){
+            binding.setAlbum(album);
+        }
+    }
+
+    public class AlbumDetailsActivtyLauncher implements View.OnClickListener{
+        private AlbumViewHolder itemView;
+
+        public AlbumDetailsActivtyLauncher(AlbumViewHolder itemView){
+            this.itemView = itemView;
+        }
+
+        @Override
+        public void onClick(View view) {
+            Log.d("INDEXXXXXXXXXXXXX", "" + itemView.getAdapterPosition());
         }
     }
 
@@ -32,13 +58,9 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
     @NonNull
     @Override
     public AlbumViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.album_list_item, parent, false);
+        AlbumListItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.album_list_item, parent, false);
 
-        return new AlbumViewHolder(itemView);
-    }
-
-    public String getLastUpdated(){
-        return albumList.getLastUpdated();
+        return new AlbumViewHolder(binding);
     }
 
     @Override
@@ -46,12 +68,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
         if(albumList != null && albumList.getAlbumList() != null){
             Album album = albumList.getAlbumList().get(position);
 
-            holder.albumName.setText(album.getAlbumName());
-            holder.artistName.setText("by " + album.getArtistName());
-
-            if(album.getAlbumImage() != null){
-                holder.albumArt.setImageBitmap(album.getAlbumImage());
-            }
+            holder.setDetailsLauncherClickListener(new AlbumDetailsActivtyLauncher(holder));
+            holder.setBinding(album);
         }
     }
 
