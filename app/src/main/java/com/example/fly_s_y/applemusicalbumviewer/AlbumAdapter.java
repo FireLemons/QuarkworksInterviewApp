@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.fly_s_y.applemusicalbumviewer.databinding.AlbumListItemBinding;
 
@@ -19,7 +18,6 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
         private final AlbumListItemBinding binding;
 
         public ImageView albumArt;
-        public TextView albumName, artistName;
 
         public AlbumViewHolder(AlbumListItemBinding binding) {
             super(binding.getRoot());

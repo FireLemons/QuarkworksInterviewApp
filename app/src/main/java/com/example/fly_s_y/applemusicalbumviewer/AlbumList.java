@@ -2,7 +2,6 @@ package com.example.fly_s_y.applemusicalbumviewer;
 
 import android.graphics.drawable.BitmapDrawable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

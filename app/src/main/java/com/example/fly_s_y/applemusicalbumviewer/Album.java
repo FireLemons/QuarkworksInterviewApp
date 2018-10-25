@@ -1,6 +1,5 @@
 package com.example.fly_s_y.applemusicalbumviewer;
 
-import android.app.Activity;
 import android.content.res.Resources;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;

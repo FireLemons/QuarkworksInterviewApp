@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import okhttp3.OkHttpClient;
-
 public class JSONRequestFetcher extends RequestFetcher {
 
     public JSONRequestFetcher(String scheme, String domain, ErrorDisplay errorDisplay) {
