@@ -43,4 +43,16 @@ public class RequestFetcher extends ConnectionHandler {
 
         call.enqueue(callback);
     }
+
+    /**
+     * Cancel wating on all active requests
+     */
+    public void cancelAllRequests(){
+        for(Call call : client.dispatcher().queuedCalls()) {
+            call.cancel();
+        }
+        for(Call call : client.dispatcher().runningCalls()) {
+            call.cancel();
+        }
+    }
 }

@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -36,7 +37,9 @@ public class AppleMusicRequestHandler extends JSONRequestFetcher {
         fetchRequest("/api/v1/us/apple-music/top-albums/all/10/explicit.json", new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                errorDisplay.setError(e.toString());
+                if(!e.getMessage().equals("Canceled")){
+                    errorDisplay.setError(e.toString());
+                }
             }
 
             @Override
@@ -52,6 +55,7 @@ public class AppleMusicRequestHandler extends JSONRequestFetcher {
                 Object data;
 
                 try{
+                    //Determine whether to instantiate JSON string as Object or Array
                     switch(responseString.charAt(0)){
                         case '[':
                             data = new JSONArray(responseString);
@@ -63,8 +67,10 @@ public class AppleMusicRequestHandler extends JSONRequestFetcher {
                             throw new JSONException("Could not convert response to JSON Object");
                     }
 
+                    //Timestamp of when top 10 albums were updated by iTunes
                     String updated = (String)getValue(data, ".feed.updated");
 
+                    //If the current timestamp does not match the timestamp from the response
                     if(!updated.equals(albumList.getLastUpdated())){
                         loadUpdatedAlbumData(data);
                         albumList.setLastUpdated(updated);
@@ -116,5 +122,19 @@ public class AppleMusicRequestHandler extends JSONRequestFetcher {
                 });
             }
         });
+    }
+
+    /**
+     * Cancels all active requests created by this class
+     * @param albums The object containing the list of album models
+     */
+    public void cancelAllRequests(List<Album> albums){
+        AppleMusicRequestHandler.super.cancelAllRequests();
+
+        if(albums != null){
+            for(Album album : albums){
+                album.cancelArtRequest();
+            }
+        }
     }
 }

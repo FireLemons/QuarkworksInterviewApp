@@ -19,8 +19,9 @@ import java.util.regex.Pattern;
  * Class representing a single album
  */
 public class Album extends BaseObservable {
-    private String albumName, artistName, albumArtURL;
+    private String albumArtURL, albumName, artistName;
     private Drawable albumArt;
+    private AlbumArtRequestHandler artFetcher;
 
     public Album(String albumArtURL, String albumName, String artistName, Drawable albumArt, Resources resources){
         this.albumArtURL = albumArtURL;
@@ -70,7 +71,7 @@ public class Album extends BaseObservable {
         Matcher urlParser = websitePath.matcher(albumArtURL);
 
         if(urlParser.find() && urlParser.groupCount() >= 2){
-            AlbumArtRequestHandler artFetcher = new AlbumArtRequestHandler(urlParser.group(1), errorDisplay);
+            artFetcher = new AlbumArtRequestHandler(urlParser.group(1), errorDisplay);
             if(artFetcher.isConnection()){
                 artFetcher.loadAlbumImage(adapter, this, albumIndex, urlParser.group(2), mainActivity);
             } else {
@@ -78,6 +79,12 @@ public class Album extends BaseObservable {
             }
         } else {
             errorDisplay.setError("Error parsing album art url.");
+        }
+    }
+
+    public void cancelArtRequest(){
+        if(artFetcher != null){
+            artFetcher.cancelAllRequests();
         }
     }
 }

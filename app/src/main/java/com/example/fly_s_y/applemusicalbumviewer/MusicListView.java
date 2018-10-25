@@ -60,6 +60,19 @@ public class MusicListView extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onPause(){
+        super.onPause();
+        handler.cancelAllRequests(albumListData.getAlbumList());
+    }
+
+    /**
+     * @return
+     */
+    public AlbumList getAlbumListData(){
+        return albumListData;
+    }
+
     /**
      * @return The model used to display errors in the UI
      */
