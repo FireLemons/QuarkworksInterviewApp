@@ -76,6 +76,8 @@ public class AppleMusicRequestHandler extends JSONRequestFetcher {
                         albumList.setLastUpdated(updated);
                     }
 
+                    albumList.loadAlbumArtForAlbumsWhereArtNotLoaded(adapter, mainActivity);
+
                     mainActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -109,7 +111,6 @@ public class AppleMusicRequestHandler extends JSONRequestFetcher {
                     );
 
                     albums.add(albumData);
-                    albumData.loadAlbumArt(adapter, i, mainActivity);
                 }
 
                 albumList.setAlbumList(albums);

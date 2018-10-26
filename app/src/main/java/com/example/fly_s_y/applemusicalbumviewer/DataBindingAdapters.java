@@ -1,8 +1,12 @@
 package com.example.fly_s_y.applemusicalbumviewer;
 
+import android.content.res.Resources;
 import android.databinding.BindingAdapter;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.ImageView;
 
 /**
@@ -13,27 +17,39 @@ import android.widget.ImageView;
  * https://stackoverflow.com/a/47312208/3667444
  */
 public class DataBindingAdapters {
-    @BindingAdapter("app:src")
-    public static void setImageUri(ImageView view, String imageUri) {
+    @BindingAdapter(value={"appleMusicAlbumViewer:src", "appleMusicAlbumViewer:defaultImage"}, requireAll = false)
+    public static void setImageUri(ImageView view, String imageUri, int defaultImage) {
         if (imageUri == null) {
-            view.setImageURI(null);
+            view.setImageResource(defaultImage);
         } else {
             view.setImageURI(Uri.parse(imageUri));
         }
     }
 
-    @BindingAdapter("app:src")
-    public static void setImageUri(ImageView view, Uri imageUri) {
-        view.setImageURI(imageUri);
+    @BindingAdapter(value={"appleMusicAlbumViewer:src", "appleMusicAlbumViewer:defaultImage"}, requireAll = false)
+    public static void setImageUri(ImageView view, Uri imageUri, int defaultImage) {
+        if(imageUri == null){
+            view.setImageResource(defaultImage);
+        } else {
+            view.setImageURI(imageUri);
+        }
     }
 
-    @BindingAdapter("app:src")
-    public static void setImageDrawable(ImageView view, Drawable drawable) {
-        view.setImageDrawable(drawable);
+    @BindingAdapter(value={"appleMusicAlbumViewer:src", "appleMusicAlbumViewer:defaultImage"}, requireAll = false)
+    public static void setImageDrawable(ImageView view, Drawable drawable, int defaultImage) {
+        if(drawable == null){
+            view.setImageResource(defaultImage);
+        } else {
+            view.setImageDrawable(drawable);
+        }
     }
 
-    @BindingAdapter("app:src")
-    public static void setImageResource(ImageView view, int resource){
-        view.setImageResource(resource);
+    @BindingAdapter(value={"appleMusicAlbumViewer:src", "appleMusicAlbumViewer:defaultImage"}, requireAll = false)
+    public static void setImageResource(ImageView view, int resource, int defaultImage){
+        if(resource < 0){
+            view.setImageResource(defaultImage);
+        } else {
+            view.setImageResource(resource);
+        }
     }
 }

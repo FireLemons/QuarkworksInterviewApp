@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:appleMusicAlbumViewer="http://schemas.android.com/apk/lib/applemusicalbumviewer">
     <data>
         <import type="android.view.View"/>
+        <import type="com.example.fly_s_y.applemusicalbumviewer.R"/>
         <variable name="album" type="com.example.fly_s_y.applemusicalbumviewer.Album"/>
     </data>
     <RelativeLayout
@@ -22,12 +23,13 @@
             android:adjustViewBounds="true"
             android:layout_alignParentLeft="true"
             android:layout_marginRight="4dp"
-            app:src="@{album.albumArt}"/>
+            appleMusicAlbumViewer:src="@{album.albumArt}"
+            appleMusicAlbumViewer:defaultImage="@{R.mipmap.broken_image}"/>
         <LinearLayout
             android:id="@+id/albumLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/albumArt"
+            android:layout_toRightOf="@+id/albumArt"
             android:orientation="vertical">
             <TextView
                 android:layout_width="match_parent"
@@ -36,13 +38,13 @@
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="10pt"
-                android:text="@{album.albumName}"/>
+                android:text="@{album.albumName, default=`Album Title`}"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:textColor="@color/white"
-                android:text="@{album.artistName}"/>
+                android:text="@{album.artistName, default=`by Artist Name`}"/>
         </LinearLayout>
     </RelativeLayout>
 </layout>

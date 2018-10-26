@@ -1,6 +1,7 @@
 package com.example.fly_s_y.applemusicalbumviewer;
 
 import android.graphics.drawable.BitmapDrawable;
+import android.util.Log;
 
 import java.util.List;
 
@@ -30,11 +31,13 @@ public class AlbumList {
     /**
      *  Finds albums where the art hasn't loaded and tries to reload them
      */
-    public void reloadAlbumArtForAlbumsWhereArtNotLoaded(){
+    public void loadAlbumArtForAlbumsWhereArtNotLoaded(AlbumAdapter adapter, MusicListView mainActivity){
         for(int i = 0; i < albumList.size(); i++){
             Album album = albumList.get(i);
 
-            if(album.getAlbumArt() instanceof BitmapDrawable){
+            if(album.getAlbumArt() == null){
+                Log.d("XXXXXXXXXXXXXX", album.getAlbumName());
+                album.loadAlbumArt(adapter, i, mainActivity);
             }
         }
     }

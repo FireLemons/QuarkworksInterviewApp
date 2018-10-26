@@ -26,11 +26,7 @@ public class Album extends BaseObservable {
         this.albumArtURL = albumArtURL;
         this.albumName = albumName;
         this.artistName = artistName;
-        if(albumArt != null){
-            this.albumArt = albumArt;
-        } else {
-            this.albumArt = new BitmapDrawable(BitmapFactory.decodeResource(resources, R.mipmap.broken_image));
-        }
+        this.albumArt = albumArt;
     }
 
     public String getAlbumArtURL(){
@@ -66,6 +62,11 @@ public class Album extends BaseObservable {
      */
     public void loadAlbumArt(AlbumAdapter adapter, int albumIndex, MusicListView mainActivity) {
         ErrorDisplay errorDisplay = mainActivity.getError();
+
+        if(albumArtURL == null || albumArtURL.length() == 0){
+            errorDisplay.setWarning("Could not find album image source.");
+        }
+
         Pattern websitePath = Pattern.compile("https://(is[0-9]-ssl\\.mzstatic\\.com)(.*)");
         Matcher urlParser = websitePath.matcher(albumArtURL);
 
