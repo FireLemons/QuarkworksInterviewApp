@@ -62,7 +62,7 @@ public class ErrorDisplay extends BaseObservable {
         notifyPropertyChanged(BR.message);
         notifyPropertyChanged(BR.isVisible);
 
-        if(this.isError == false){
+        if(!this.isError){
             this.isError = true;
             notifyPropertyChanged(BR.isError);
         }
@@ -78,7 +78,7 @@ public class ErrorDisplay extends BaseObservable {
         notifyPropertyChanged(BR.message);
         notifyPropertyChanged(BR.isVisible);
 
-        if(this.isError == true){
+        if(this.isError){
             this.isError = false;
             notifyPropertyChanged(BR.isError);
         }

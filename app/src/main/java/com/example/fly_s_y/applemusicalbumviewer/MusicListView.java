@@ -67,13 +67,6 @@ public class MusicListView extends AppCompatActivity {
     }
 
     /**
-     * @return
-     */
-    public AlbumList getAlbumListData(){
-        return albumListData;
-    }
-
-    /**
      * @return The model used to display errors in the UI
      */
     public ErrorDisplay getError(){

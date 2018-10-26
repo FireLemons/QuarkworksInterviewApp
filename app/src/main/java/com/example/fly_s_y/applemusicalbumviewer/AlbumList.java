@@ -1,8 +1,5 @@
 package com.example.fly_s_y.applemusicalbumviewer;
 
-import android.graphics.drawable.BitmapDrawable;
-import android.util.Log;
-
 import java.util.List;
 
 /**
@@ -36,7 +33,6 @@ public class AlbumList {
             Album album = albumList.get(i);
 
             if(album.getAlbumArt() == null){
-                Log.d("XXXXXXXXXXXXXX", album.getAlbumName());
                 album.loadAlbumArt(adapter, i, mainActivity);
             }
         }

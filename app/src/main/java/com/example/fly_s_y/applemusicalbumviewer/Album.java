@@ -3,7 +3,6 @@ package com.example.fly_s_y.applemusicalbumviewer;
 import android.content.res.Resources;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
@@ -82,6 +81,9 @@ public class Album extends BaseObservable {
         }
     }
 
+    /**
+     * Cancels wai
+     */
     public void cancelArtRequest(){
         if(artFetcher != null){
             artFetcher.cancelAllRequests();

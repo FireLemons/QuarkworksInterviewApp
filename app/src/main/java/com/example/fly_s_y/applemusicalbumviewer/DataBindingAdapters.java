@@ -1,12 +1,8 @@
 package com.example.fly_s_y.applemusicalbumviewer;
 
-import android.content.res.Resources;
 import android.databinding.BindingAdapter;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.util.Log;
 import android.widget.ImageView;
 
 /**
