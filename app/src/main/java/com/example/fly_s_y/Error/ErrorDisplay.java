@@ -1,7 +1,9 @@
-package com.example.fly_s_y.applemusicalbumviewer;
+package com.example.fly_s_y.Error;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+
+import com.example.fly_s_y.applemusicalbumviewer.BR;
 
 /**
  * Model class for the error modal

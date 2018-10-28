@@ -1,6 +1,6 @@
 package com.example.fly_s_y.Request;
 
-import com.example.fly_s_y.applemusicalbumviewer.ErrorDisplay;
+import com.example.fly_s_y.Error.ErrorDisplay;
 
 import okhttp3.Call;
 import okhttp3.Callback;

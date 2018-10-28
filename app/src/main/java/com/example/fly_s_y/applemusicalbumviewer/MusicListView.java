@@ -1,11 +1,12 @@
 package com.example.fly_s_y.applemusicalbumviewer;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.example.fly_s_y.Error.ErrorDisplay;
 import com.example.fly_s_y.Request.AppleMusicRequestHandler;
 
 public class MusicListView extends AppCompatActivity {

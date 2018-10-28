@@ -6,6 +6,7 @@ import android.databinding.Bindable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
+import com.example.fly_s_y.Error.ErrorDisplay;
 import com.example.fly_s_y.Request.AlbumArtRequestHandler;
 
 import org.json.JSONException;

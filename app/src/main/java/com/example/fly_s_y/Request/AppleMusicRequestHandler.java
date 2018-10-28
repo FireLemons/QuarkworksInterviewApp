@@ -3,7 +3,7 @@ package com.example.fly_s_y.Request;
 import com.example.fly_s_y.applemusicalbumviewer.Album;
 import com.example.fly_s_y.applemusicalbumviewer.AlbumAdapter;
 import com.example.fly_s_y.applemusicalbumviewer.AlbumList;
-import com.example.fly_s_y.applemusicalbumviewer.ErrorDisplay;
+import com.example.fly_s_y.Error.ErrorDisplay;
 import com.example.fly_s_y.applemusicalbumviewer.MusicListView;
 
 import org.json.JSONArray;

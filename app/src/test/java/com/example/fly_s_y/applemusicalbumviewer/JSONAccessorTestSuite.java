@@ -1,5 +1,6 @@
 package com.example.fly_s_y.applemusicalbumviewer;
 
+import com.example.fly_s_y.Error.ErrorDisplay;
 import com.example.fly_s_y.Request.RequestFetcher;
 
 import org.json.JSONArray;

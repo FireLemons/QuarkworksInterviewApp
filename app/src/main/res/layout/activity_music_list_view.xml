@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
         <fragment
-            android:name="com.example.fly_s_y.applemusicalbumviewer.ErrorModalFragment"
+            android:name="com.example.fly_s_y.Error.ErrorModalFragment"
             android:id="@+id/errorScreen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
