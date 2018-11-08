@@ -1,6 +1,5 @@
 package com.example.fly_s_y.applemusicalbumviewer;
 
-import android.content.res.Resources;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.graphics.drawable.BitmapDrawable;
@@ -11,6 +10,8 @@ import com.example.fly_s_y.Request.AlbumArtRequestHandler;
 
 import org.json.JSONException;
 
+import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,19 +19,33 @@ import java.util.regex.Pattern;
  * Class representing a single album
  */
 public class Album extends BaseObservable {
-    private String albumArtURL, albumName, artistName;
+    private boolean isExplicit;
+    private String albumArtURL, albumLink, albumName, artistName, artistLink, copyright;
+    private Date releaseDate;
     private Drawable albumArt;
     private AlbumArtRequestHandler artFetcher;
+    private List<Genre> genres;
 
-    public Album(String albumArtURL, String albumName, String artistName, Drawable albumArt, Resources resources){
+    public Album(boolean isExplicit,
+                 String albumArtURL, String albumName, String albumURL, String artistName, String artistURL, String copyright,
+                 Date releaseDate,
+                 Drawable albumArt,
+                 List<Genre> genres){
+        this.isExplicit = isExplicit;
         this.albumArtURL = albumArtURL;
+        this.albumLink = "<a href=\\\"" + albumURL + "\\\">" + albumName + "</a>";
         this.albumName = albumName;
+        this.artistLink = artistURL;
         this.artistName = artistName;
+        this.copyright = copyright;
+        this.releaseDate = releaseDate;
         this.albumArt = albumArt;
+        this.genres = genres;
     }
 
-    public String getAlbumArtURL(){
-        return albumArtURL;
+    @Bindable
+    public boolean isExplicit() {
+        return isExplicit;
     }
 
     @Bindable
@@ -83,7 +98,7 @@ public class Album extends BaseObservable {
     }
 
     /**
-     * Cancels wai
+     * Cancels request for loading art
      */
     public void cancelArtRequest(){
         if(artFetcher != null){

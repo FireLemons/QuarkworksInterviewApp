@@ -4,6 +4,7 @@ import java.util.List;
 
 /**
  * Holds Album data fetched from iTunes
+ * and metadata corresponding to the album data
  */
 public class AlbumList {
     private List<Album> albumList;
@@ -26,7 +27,7 @@ public class AlbumList {
     }
 
     /**
-     *  Finds albums where the art hasn't loaded and tries to reload them
+     *  Launches requests to reload album art for each album where the art has not yet been loaded
      */
     public void loadAlbumArtForAlbumsWhereArtNotLoaded(AlbumAdapter adapter, MusicListView mainActivity){
         for(int i = 0; i < albumList.size(); i++){

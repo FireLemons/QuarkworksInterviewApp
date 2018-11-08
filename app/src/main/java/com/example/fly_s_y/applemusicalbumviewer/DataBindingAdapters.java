@@ -13,6 +13,12 @@ import android.widget.ImageView;
  * https://stackoverflow.com/a/47312208/3667444
  */
 public class DataBindingAdapters {
+    /**
+     * Binds an image to an ImageView via a URI
+     * @param view The view where the image will be displayed
+     * @param imageUri The URI referencing the image
+     * @param defaultImage The image to display when imageUri fails to reference an image
+     */
     @BindingAdapter(value={"appleMusicAlbumViewer:src", "appleMusicAlbumViewer:defaultImage"}, requireAll = false)
     public static void setImageUri(ImageView view, String imageUri, int defaultImage) {
         if (imageUri == null) {
@@ -22,6 +28,12 @@ public class DataBindingAdapters {
         }
     }
 
+    /**
+     * Binds an image to an ImageView via a URI
+     * @param view The view where the image will be displayed
+     * @param imageUri The URI referencing the image
+     * @param defaultImage The image to display when imageUri fails to reference an image
+     */
     @BindingAdapter(value={"appleMusicAlbumViewer:src", "appleMusicAlbumViewer:defaultImage"}, requireAll = false)
     public static void setImageUri(ImageView view, Uri imageUri, int defaultImage) {
         if(imageUri == null){

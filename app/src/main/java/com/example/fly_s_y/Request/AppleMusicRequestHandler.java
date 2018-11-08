@@ -1,17 +1,23 @@
 package com.example.fly_s_y.Request;
 
+import android.util.Log;
+
 import com.example.fly_s_y.applemusicalbumviewer.Album;
 import com.example.fly_s_y.applemusicalbumviewer.AlbumAdapter;
 import com.example.fly_s_y.applemusicalbumviewer.AlbumList;
-import com.example.fly_s_y.Error.ErrorDisplay;
+import com.example.fly_s_y.applemusicalbumviewer.Genre;
 import com.example.fly_s_y.applemusicalbumviewer.MusicListView;
+import com.example.fly_s_y.Error.ErrorDisplay;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.Call;
@@ -86,8 +92,8 @@ public class AppleMusicRequestHandler extends JSONRequestFetcher {
                         }
                     });
                 } catch (JSONException ex){
-                    errorDisplay.setError(ex.getMessage());
-                }
+                    errorDisplay.setError("Error parsing JSON data into Album.\n" + ex.getStackTrace());
+                } 
             }
 
             /**
@@ -102,12 +108,25 @@ public class AppleMusicRequestHandler extends JSONRequestFetcher {
                 for(int i = 0; i < albumsData.length(); i++){
                     Object albumJSON = albumsData.get(i);
 
+                    boolean isExplicit = false;
+
+                    try{
+                        isExplicit = Boolean.parseBoolean((String)getValue(albumJSON, ".contentAdvisoryRating"));
+                    } catch (JSONException e){
+                        Log.d("Null explicit?", e.getMessage());
+                    }
+
                     Album albumData = new Album(
+                            isExplicit,
                             (String)getValue(albumJSON, ".artworkUrl100"),
                             (String)getValue(albumJSON, ".name"),
+                            (String)getValue(albumJSON, ".url"),
                             (String)getValue(albumJSON, ".artistName"),
+                            (String)getValue(albumJSON, ".artistUrl"),
+                            (String)getValue(albumJSON, ".copyright"),
+                            parseITunesDate((String)getValue(albumJSON, ".releaseDate")),
                             null,
-                            mainActivity.getResources()
+                            getGenres((JSONArray)getValue(albumJSON, ".genres"))
                     );
 
                     albums.add(albumData);
@@ -137,5 +156,60 @@ public class AppleMusicRequestHandler extends JSONRequestFetcher {
                 album.cancelArtRequest();
             }
         }
+    }
+
+    /**
+     * Parses a date string from iTunes into a Date object
+     * @param dateString a string in the form YYYY-MM-DD
+     * @return the data contained in dateString as Date object
+     */
+    private Date parseITunesDate(String dateString){
+        SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+
+        try{
+            date = parser.parse(dateString);
+        }catch(ParseException ex){
+            errorDisplay.setWarning("Could not parse album release date.\n" + ex.getStackTrace());
+        }
+
+        return date;
+    }
+
+    /**
+     * Converts a JSONArray of genres as JSONObjects to an ArrayList of Genre objects
+     * @param genreList The list of genres to be converted as a JSONArray
+     * @return an ArrayList of Genre objects for each genre successfully converted
+     */
+    private List<Genre> getGenres(JSONArray genreList){
+        List<Genre> genres = new ArrayList<>();
+
+        for(int i = 0; i < genreList.length(); i++){
+            JSONObject genre;
+
+            //Try casting each element in the JSONArray as a genre.
+            try{
+               genre = (JSONObject) genreList.get(i);
+            } catch (ClassCastException ex){
+                errorDisplay.setWarning("Failed casting non JSON object as music genre.\n" + ex.getStackTrace());
+                continue;
+            } catch (JSONException ex){
+                errorDisplay.setWarning("Failed getting music genre JSONObject from JSONArray.\n" + ex.getStackTrace());
+                continue;
+            }
+
+            //Try mapping the JSONObject to a genre object.
+            try{
+                genres.add(new Genre((String)getValue(genre, ".name"), (String)getValue(genre, ".url")));
+            } catch(ClassCastException ex){
+                errorDisplay.setWarning("Failed casting music genre field as a string from a JSON object.\n" + ex.getStackTrace());
+                continue;
+            } catch(JSONException ex){
+                errorDisplay.setWarning("Failed getting music genre field from a JSON object. \n" + ex.getStackTrace());
+                continue;
+            }
+        }
+
+        return genres;
     }
 }
