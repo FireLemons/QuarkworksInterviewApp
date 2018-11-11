@@ -1,6 +1,6 @@
-package com.example.fly_s_y.Request;
+package com.example.fly_s_y.request;
 
-import com.example.fly_s_y.Error.ErrorDisplay;
+import com.example.fly_s_y.error.ErrorDisplay;
 
 import org.json.JSONArray;
 import org.json.JSONException;

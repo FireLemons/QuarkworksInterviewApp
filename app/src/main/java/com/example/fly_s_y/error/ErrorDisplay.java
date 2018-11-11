@@ -1,4 +1,4 @@
-package com.example.fly_s_y.Error;
+package com.example.fly_s_y.error;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;

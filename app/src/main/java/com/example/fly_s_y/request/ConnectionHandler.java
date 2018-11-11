@@ -1,4 +1,4 @@
-package com.example.fly_s_y.Request;
+package com.example.fly_s_y.request;
 
 import java.io.IOException;
 

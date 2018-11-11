@@ -1,11 +1,11 @@
-package com.example.fly_s_y.Request;
+package com.example.fly_s_y.request;
 
 import android.app.Activity;
 import android.graphics.drawable.BitmapDrawable;
 
 import com.example.fly_s_y.applemusicalbumviewer.Album;
 import com.example.fly_s_y.applemusicalbumviewer.AlbumAdapter;
-import com.example.fly_s_y.Error.ErrorDisplay;
+import com.example.fly_s_y.error.ErrorDisplay;
 
 import java.io.IOException;
 

@@ -1,7 +1,7 @@
 package com.example.fly_s_y.applemusicalbumviewer;
 
-import com.example.fly_s_y.Error.ErrorDisplay;
-import com.example.fly_s_y.Request.RequestFetcher;
+import com.example.fly_s_y.error.ErrorDisplay;
+import com.example.fly_s_y.request.RequestFetcher;
 
 import org.json.JSONArray;
 import org.json.JSONException;

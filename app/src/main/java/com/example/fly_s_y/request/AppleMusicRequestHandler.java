@@ -1,4 +1,4 @@
-package com.example.fly_s_y.Request;
+package com.example.fly_s_y.request;
 
 import android.util.Log;
 
@@ -7,7 +7,7 @@ import com.example.fly_s_y.applemusicalbumviewer.AlbumAdapter;
 import com.example.fly_s_y.applemusicalbumviewer.AlbumList;
 import com.example.fly_s_y.applemusicalbumviewer.Genre;
 import com.example.fly_s_y.applemusicalbumviewer.MusicListView;
-import com.example.fly_s_y.Error.ErrorDisplay;
+import com.example.fly_s_y.error.ErrorDisplay;
 
 import org.json.JSONArray;
 import org.json.JSONException;

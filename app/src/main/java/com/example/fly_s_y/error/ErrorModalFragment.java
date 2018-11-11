@@ -1,4 +1,4 @@
-package com.example.fly_s_y.Error;
+package com.example.fly_s_y.error;
 
 import android.support.v4.app.Fragment;
 import android.databinding.DataBindingUtil;

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <import type="android.view.View"/>
-        <variable name="error" type="com.example.fly_s_y.Error.ErrorDisplay"/>
+        <variable name="error" type="com.example.fly_s_y.error.ErrorDisplay"/>
     </data>
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

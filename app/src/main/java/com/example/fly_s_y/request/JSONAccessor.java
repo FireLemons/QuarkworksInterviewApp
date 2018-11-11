@@ -1,4 +1,4 @@
-package com.example.fly_s_y.Request;
+package com.example.fly_s_y.request;
 
 public class JSONAccessor {
     private JSONAccessorType type;

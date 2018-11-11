@@ -6,8 +6,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.example.fly_s_y.Error.ErrorDisplay;
-import com.example.fly_s_y.Request.AppleMusicRequestHandler;
+import com.example.fly_s_y.error.ErrorDisplay;
+import com.example.fly_s_y.request.AppleMusicRequestHandler;
 
 public class MusicListView extends AppCompatActivity {
 
